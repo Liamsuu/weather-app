@@ -2,16 +2,32 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=\, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   </head>
   <body>
-    <nav></nav>
-    <div id="main-container"></div>
-    <input type="text" name="search-location" id="search-location" />
-    <div>
-      <div class="right-nav-stuff"></div>
-      <div class="right-nav-stuff"></div>
-      <div class="right-nav-stuff"></div>
+    <nav>
+      <img src="#" alt="Logo" id="nav-logo" />
+      <form action="#" method="get" id="location-form">
+        <input
+          placeholder="London"
+          type="text"
+          name="search-location"
+          id="search-location"
+          required
+        />
+        <button type="submit">Search</button>
+      </form>
+
+      <div>
+        <div class="right-nav-stuff"></div>
+        <div class="right-nav-stuff"></div>
+        <div class="right-nav-stuff"></div>
+      </div>
+    </nav>
+    <div id="main-container">
+      <div class="main-section-boxes" id="location-general-info"></div>
+      <div class="main-section-boxes"></div>
+      <div class="main-section-boxes"></div>
     </div>
   </body>
 </html>

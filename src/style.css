@@ -8,15 +8,28 @@ body {
   flex-direction: column;
   align-items: center;
   height: 200vh;
+  background-color: #dbeafe;
+}
+
+:root {
+  --main-content-boxes-width: 70%;
+  --main-text-clr: #dbeafe;
+  --main-content-boxes-background: #60a5fabd;
 }
 
 #main-container {
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   padding-top: 5rem;
-  margin-top: auto;
-  height: 170vh;
+  padding-bottom: 5rem;
+  margin-top: 5rem;
+  margin-bottom: auto;
+  height: 100vh;
   width: 50vw;
-  background-color: red;
+  /* background-color: red; */
+  gap: 2rem;
 }
 
 nav {
@@ -31,6 +44,47 @@ nav {
 }
 
 #nav-logo {
+  margin-left: auto;
+  margin-right: 4rem;
   height: 5rem;
   width: 5rem;
+}
+
+#search-location {
+  border-radius: 15px;
+  border: none;
+  flex: 1;
+  height: 100%;
+  padding-left: 1.5rem;
+  font-size: 1.2rem;
+  color: #1e3a8a;
+  background-color: #dbeafe;
+}
+
+#search-location:focus {
+  outline: 2px solid #3b82f6;
+}
+
+#location-form {
+  display: flex;
+  height: 50%;
+  width: 80%;
+  align-items: center;
+  justify-content: center;
+}
+
+#location-form button {
+  margin-right: 10rem;
+  background-color: #dbeafe;
+  border: none;
+  margin-left: 1rem;
+  padding: 0.3rem;
+}
+
+.main-section-boxes {
+  flex: 1;
+  width: var(--main-content-boxes-width);
+  background-color: var(--main-content-boxes-background);
+  border-radius: 10px;
+  color: var(--main-text-clr);
 }
