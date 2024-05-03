@@ -7,6 +7,12 @@ const WEATHER_API_KEY = "5ecc5123eac74a06bad220316243004";
 const userLocationInput = document.querySelector("#search-location");
 const locationForm = document.querySelector("#location-form");
 const imageTag = document.querySelector("#nav-logo");
+const locTitleWrapper = document.querySelector("#location-title-wrapper"); // use the h1 inside this(its first child).
+const weatherTempWrapper = document.querySelector("#temp-wrapper"); // use the p for temp, and img will be a icon that when clicked will change the temp from C to F temp unit.
+const weatherConditionWrapper = document.querySelector(
+  "#weather-condition-wrapper"
+);
+
 imageTag.src = weatherLogo;
 let currentLocationWeatherInfo;
 
@@ -33,6 +39,25 @@ async function getLocationData(locationValue) {
   }
 }
 
+function addFirstSectionInfo() {
+  locTitleWrapper.firstChild.nextSibling.textContent =
+    currentLocationWeatherInfo.location;
+  weatherTempWrapper.firstChild.nextSibling.textContent =
+    currentLocationWeatherInfo.degreeC;
+  weatherConditionWrapper.firstChild.nextSibling.textContent =
+    currentLocationWeatherInfo.weatherCondition;
+}
+
+function setCurrentWeather(infoHolder) {
+  currentLocationWeatherInfo = new Weather(
+    infoHolder[0],
+    infoHolder[1],
+    infoHolder[2],
+    infoHolder[3],
+    infoHolder[4]
+  );
+}
+
 locationForm.addEventListener("submit", async (event) => {
   event.preventDefault();
   event.stopPropagation();
@@ -41,13 +66,9 @@ locationForm.addEventListener("submit", async (event) => {
       const weatherInfo = await getLocationData(userLocationInput.value);
       weatherInfo[4] = weatherInfo[4].replace((/^/, "http:"));
 
-      currentLocationWeatherInfo = new Weather(
-        weatherInfo[0],
-        weatherInfo[1],
-        weatherInfo[2],
-        weatherInfo[3],
-        weatherInfo[4]
-      );
+      setCurrentWeather(weatherInfo);
+      addFirstSectionInfo();
+
       console.log(currentLocationWeatherInfo);
       userLocationInput.setCustomValidity("");
     } catch (error) {
@@ -65,4 +86,11 @@ locationForm.addEventListener("submit", async (event) => {
   } else {
     console.error("Something went wrong here...");
   }
+});
+
+// add initial values when website is loaded.
+window.addEventListener("load", async () => {
+  const initialLocationValues = await getLocationData("london");
+  setCurrentWeather(initialLocationValues);
+  addFirstSectionInfo();
 });

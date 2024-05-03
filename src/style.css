@@ -28,8 +28,37 @@ body {
   margin-bottom: auto;
   height: 100vh;
   width: 50vw;
-  /* background-color: red; */
   gap: 2rem;
+}
+
+.main-section-boxes {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.info-sections {
+  width: 90%;
+  height: 20%;
+  background-color: #60a5fa;
+  margin-left: 1rem;
+}
+
+#location-title-wrapper {
+  /* this background colour will overrule the class one, since it has more specifity. Title looks better without background */
+  background-color: transparent;
+  font-size: 1.5rem;
+  height: fit-content;
+}
+
+#temp-wrapper,
+#weather-condition-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding-left: 1rem;
+  font-size: 1.3rem;
 }
 
 nav {
