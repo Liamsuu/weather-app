@@ -24,7 +24,7 @@ async function getLocationData(locationValue) {
     locationInfo.push(await todaysWeatherJson.current.temp_c);
     locationInfo.push(await todaysWeatherJson.current.temp_f);
     locationInfo.push(await todaysWeatherJson.current.condition.text);
-    locationInfo.push(await todaysWeatherJson.current.condition.text);
+    locationInfo.push(await todaysWeatherJson.current.condition.icon);
 
     return locationInfo; // will return name, current degreesC, current weather.
     // if I want this result i must get it by using something with "await" such as 'console.log(await getLiveWeather("cardiff"))
@@ -37,16 +37,22 @@ locationForm.addEventListener("submit", async (event) => {
   event.preventDefault();
   event.stopPropagation();
   if (checkInputValidity(userLocationInput.value) === true) {
-    const weatherInfo = await getLocationData(userLocationInput.value);
-    weatherInfo[4] = weatherInfo[4].replace((/^/, "http:"));
-    currentLocationWeatherInfo = new Weather(
-      weatherInfo[0],
-      weatherInfo[1],
-      weatherInfo[2],
-      weatherInfo[3],
-      weatherInfo[4]
-    );
-    userLocationInput.setCustomValidity("");
+    try {
+      const weatherInfo = await getLocationData(userLocationInput.value);
+      weatherInfo[4] = weatherInfo[4].replace((/^/, "http:"));
+
+      currentLocationWeatherInfo = new Weather(
+        weatherInfo[0],
+        weatherInfo[1],
+        weatherInfo[2],
+        weatherInfo[3],
+        weatherInfo[4]
+      );
+      console.log(currentLocationWeatherInfo);
+      userLocationInput.setCustomValidity("");
+    } catch (error) {
+      console.error(error);
+    }
   } else if (checkInputValidity(userLocationInput.value) === false) {
     userLocationInput.setCustomValidity("Please type a place name");
     userLocationInput.addEventListener("input", () => {
