@@ -8,6 +8,7 @@ export default class Weather {
     this.humidity = "";
     this.wind_mph = "";
     this.uv = ""; // these bottom 3 will be updated with functions as not all weathers need them here.
+    this.date = "";
   }
 
   setHumiditty(humidityValue) {
@@ -20,5 +21,9 @@ export default class Weather {
 
   setUv(uvValue) {
     this.uv = uvValue;
+  }
+
+  setDate(dateValue) {
+    this.date = dateValue;
   }
 }
