@@ -63,12 +63,11 @@ let finalDayWeatherInfo;
 async function getLocationData(locationValue) {
   try {
     const todaysWeather = await fetch(
-      `http://api.weatherapi.com/v1/current.json?key=${WEATHER_API_KEY}&q=${locationValue}`,
+      `https://api.weatherapi.com/v1/current.json?key=${WEATHER_API_KEY}&q=${locationValue}`,
       { mode: "cors" }
     );
 
     const todaysWeatherJson = await todaysWeather.json();
-    console.log(todaysWeatherJson);
     const locationInfo = [];
     locationInfo.push(await todaysWeatherJson.location.name);
     locationInfo.push(await todaysWeatherJson.current.temp_c);
@@ -90,11 +89,10 @@ async function getLocationData(locationValue) {
 async function getForecast(locationValue) {
   try {
     const forecastWeather = await fetch(
-      `http://api.weatherapi.com/v1/forecast.json?key=${WEATHER_API_KEY}&q=${locationValue}&days=4&aqi=no&alerts=no`,
+      `https://api.weatherapi.com/v1/forecast.json?key=${WEATHER_API_KEY}&q=${locationValue}&days=4&aqi=no&alerts=no`,
       { mode: "cors" }
     );
     const forecastWeatherJson = await forecastWeather.json();
-    console.log(forecastWeatherJson);
     const locationForecastInfo = [[], [], []];
     // 1st day forecast(future weather).
     locationForecastInfo[0].push(
@@ -134,24 +132,32 @@ async function getForecast(locationValue) {
 
 // Adds the temperature and the weather condition(cloudy, rainy, etc) to the FIRST BOX.
 function addFirstSectionInfo() {
-  locTitleWrapper.firstChild.nextSibling.textContent =
+  // locTitleWrapper.firstChild.nextSibling.textContent =
+  //   currentLocationWeatherInfo.location;
+  // weatherTempWrapper.firstChild.nextSibling.textContent =
+  //   currentLocationWeatherInfo.degreeC;
+  // weatherConditionWrapper.firstChild.nextSibling.textContent =
+  //   currentLocationWeatherInfo.weatherCondition;
+
+  locTitleWrapper.firstElementChild.textContent =
     currentLocationWeatherInfo.location;
-  weatherTempWrapper.firstChild.nextSibling.textContent =
+  weatherTempWrapper.firstElementChild.textContent =
     currentLocationWeatherInfo.degreeC;
-  weatherConditionWrapper.firstChild.nextSibling.textContent =
+  weatherConditionWrapper.firstElementChild.textContent =
     currentLocationWeatherInfo.weatherCondition;
+
   const weatherImg = new Image();
   weatherImg.src = currentLocationWeatherInfo.weatherLogo;
   weatherIconElem.src = weatherImg.src;
   changeTempUnitElem.onclick = () => {
     if (
-      weatherTempWrapper.firstChild.nextSibling.textContent ===
+      weatherTempWrapper.firstElementChild.textContent ===
       currentLocationWeatherInfo.degreeC
     ) {
-      weatherTempWrapper.firstChild.nextSibling.textContent =
+      weatherTempWrapper.firstElementChild.textContent =
         currentLocationWeatherInfo.degreeF;
     } else {
-      weatherTempWrapper.firstChild.nextSibling.textContent =
+      weatherTempWrapper.firstElementChild.textContent =
         currentLocationWeatherInfo.degreeC;
     }
   };
@@ -159,9 +165,9 @@ function addFirstSectionInfo() {
 
 // Used to add locations 'extra' information to the second box.
 function addAdditionalInfo() {
-  humidityWrapper.firstChild.nextSibling.textContent = `Humidity: ${currentLocationWeatherInfo.humidity}%`;
-  windWrapper.firstChild.nextSibling.textContent = `Wind: ${currentLocationWeatherInfo.wind_mph} mph`;
-  uvWrapper.firstChild.nextSibling.textContent = `Uv Index: ${currentLocationWeatherInfo.uv}`;
+  humidityWrapper.firstElementChild.textContent = `Humidity: ${currentLocationWeatherInfo.humidity}%`;
+  windWrapper.firstElementChild.textContent = `Wind: ${currentLocationWeatherInfo.wind_mph} mph`;
+  uvWrapper.firstElementChild.textContent = `Uv Index: ${currentLocationWeatherInfo.uv}`;
 }
 
 // Used to add forecast temperatures and dates in the third box
@@ -220,7 +226,7 @@ function addForecastInfo() {
   };
 }
 
-function setCurrentWeather(infoHolder) {
+async function setCurrentWeather(infoHolder) {
   currentLocationWeatherInfo = new Weather(
     infoHolder[0],
     infoHolder[1],
@@ -280,10 +286,9 @@ locationForm.addEventListener("submit", async (event) => {
       addAdditionalInfo();
       addForecastInfo();
 
-      console.log(currentLocationWeatherInfo);
       userLocationInput.setCustomValidity("");
     } catch (error) {
-      console.error(error);
+      throw new Error("That wasn't a placename!!"); // change change back to log error if this causes problems(console.error(error))
     }
   } else if (checkInputValidity(userLocationInput.value) === false) {
     userLocationInput.setCustomValidity("Please type a place name");
@@ -295,7 +300,8 @@ locationForm.addEventListener("submit", async (event) => {
       }
     });
   } else {
-    console.error("Something went wrong here...");
+    // console.error("Something went wrong here...");
+    throw new Error("Something went wrong..");
   }
 });
 
