@@ -96,32 +96,32 @@ async function getForecast(locationValue) {
     const locationForecastInfo = [[], [], []];
     // 1st day forecast(future weather).
     locationForecastInfo[0].push(
-      await forecastWeatherJson.forecast.forecastday[1].date
+      await forecastWeatherJson.forecast.forecastday[0].date
     );
     locationForecastInfo[0].push(
-      await forecastWeatherJson.forecast.forecastday[1].day.avgtemp_c
+      await forecastWeatherJson.forecast.forecastday[0].day.avgtemp_c
     );
     locationForecastInfo[0].push(
-      await forecastWeatherJson.forecast.forecastday[1].day.avgtemp_f
+      await forecastWeatherJson.forecast.forecastday[0].day.avgtemp_f
     );
     // 2nd day forecast(future weather)
     locationForecastInfo[1].push(
+      await forecastWeatherJson.forecast.forecastday[1].date
+    );
+    locationForecastInfo[1].push(
+      await forecastWeatherJson.forecast.forecastday[1].day.avgtemp_c
+    );
+    locationForecastInfo[1].push(
+      await forecastWeatherJson.forecast.forecastday[1].day.avgtemp_f
+    );
+    locationForecastInfo[2].push(
       await forecastWeatherJson.forecast.forecastday[2].date
     );
-    locationForecastInfo[1].push(
+    locationForecastInfo[2].push(
       await forecastWeatherJson.forecast.forecastday[2].day.avgtemp_c
     );
-    locationForecastInfo[1].push(
+    locationForecastInfo[2].push(
       await forecastWeatherJson.forecast.forecastday[2].day.avgtemp_f
-    );
-    locationForecastInfo[2].push(
-      await forecastWeatherJson.forecast.forecastday[3].date
-    );
-    locationForecastInfo[2].push(
-      await forecastWeatherJson.forecast.forecastday[3].day.avgtemp_c
-    );
-    locationForecastInfo[2].push(
-      await forecastWeatherJson.forecast.forecastday[3].day.avgtemp_f
     );
 
     return locationForecastInfo;
